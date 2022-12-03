@@ -9,7 +9,7 @@ train_img = np.load("/DATA/jakaria_data/dataset/volumes_modified/trainImages.npy
 train_mask = np.load("/DATA/jakaria_data/dataset/volumes_modified/trainMasks.npy")
 
 count = 0
-for img, mask in progressbar.progressbar(zip(train_img,train_mask)):
+for img, mask in zip(train_img,train_mask):
     img = img.reshape(512,512)
     img = cv2.normalize(img,img,alpha=0,beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
     
@@ -20,13 +20,14 @@ for img, mask in progressbar.progressbar(zip(train_img,train_mask)):
     cv2.imwrite("/DATA/jakaria_data/dataset/prepared_data/train/images/"+str(count)+".png",img)
     cv2.imwrite("/DATA/jakaria_data/dataset/prepared_data/train/masks/"+str(count)+".png",mask)
     count = count + 1
+    print("Train image "+str(count))
 
 
 test_img = np.load("/DATA/jakaria_data/dataset/volumes_modified/testImages.npy")
 test_mask = np.load("/DATA/jakaria_data/dataset/volumes_modified/testMasks.npy")
 
 count = 0
-for img, mask in progressbar.progressbar(zip(test_img,test_mask)):
+for img, mask in zip(test_img,test_mask):
     img = img.reshape(512,512)
     img = cv2.normalize(img,img,alpha=0,beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
     
@@ -37,3 +38,4 @@ for img, mask in progressbar.progressbar(zip(test_img,test_mask)):
     cv2.imwrite("/DATA/jakaria_data/dataset/prepared_data/test/images/"+str(count)+".png",img)
     cv2.imwrite("/DATA/jakaria_data/dataset/prepared_data/test/masks/"+str(count)+".png",mask)
     count = count + 1
+    print("Test image "+str(count))
