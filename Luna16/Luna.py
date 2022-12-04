@@ -8,8 +8,8 @@ Train on the Nodule segmentation dataset from the
 Usage: import the module (see Jupyter notebooks for examples), or run from
        the command line as such:
 
-    # Train a new model starting from ImageNet weights
-    python3 Luna1.py train --dataset=/path/to/dataset --subset=train --weights=imagenet
+    # Train a new model starting from coco (pretrained) weights
+    python Luna.py train --dataset=/DATA/jakaria_data/dataset/prepared_data --subset=train --weights=coco
 
     # Train a new model starting from specific weights file
     python3 Luna1.py train --dataset=/path/to/dataset --subset=train --weights=/path/to/weights.h5
@@ -44,17 +44,18 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Root directory of the project
-ROOT_DIR = os.path.abspath("../../")
+ROOT_DIR = "/DATA/jakaria_data/"
+RESULTS_DIR = "/DATA/jakaria_data/Results/"
 
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
-from src.Mask_RCNN.mrcnn.config import Config
-from src.Mask_RCNN.mrcnn import utils
-from src.Mask_RCNN.mrcnn import model as modellib
-from src.Mask_RCNN.mrcnn import visualize
+from mrcnn.config import Config
+from mrcnn import utils
+from mrcnn import model as modellib
+from mrcnn import visualize
 
 # Path to trained weights file
-COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
+COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "nucleus20200529T1534/mask_rcnn_coco.h5")
 
 # Directory to save logs and model checkpoints, if not provided
 # through the command line argument --logs
@@ -82,8 +83,8 @@ class LunaConfig(Config):
     # 2841
     # 711
     # Number of training and validation steps per epoch
-    STEPS_PER_EPOCH = (2841) // IMAGES_PER_GPU
-    VALIDATION_STEPS = (711) // IMAGES_PER_GPU
+    STEPS_PER_EPOCH = (2843) // IMAGES_PER_GPU
+    VALIDATION_STEPS = (710) // IMAGES_PER_GPU
 
     # Don't exclude based on confidence. Since we have two classes
     # then 0.5 is the minimum anyway as it picks between Nodule and BG
@@ -92,7 +93,7 @@ class LunaConfig(Config):
     # Backbone network architecture
     # Supported values are: resnet50, resnet101
     #BACKBONE = "resnet50"
-    BACKBONE = "resnet50"
+    BACKBONE = "resnet101"
 
     # Input image resizing
     # Random crops of size 512x512
@@ -178,16 +179,18 @@ class LunaDataset(utils.Dataset):
             #image_ids = next(os.walk(dataset_dir))[1]
             #image_ids = list(set(image_ids))
             image_ids = glob.glob(dataset_dir+"/"+subset+"/images/*.png")
+            print("IMAGE IDs Directory: "+ dataset_dir+"/"+subset+"/images/")
         else:
             # Get image ids from directory names
             # image_ids = next(os.walk(dataset_dir))[1]
             # if subset == "train":
                 # image_ids = list(set(image_ids))
             image_ids = glob.glob(dataset_dir+"/"+subset+"/images/*.png")
+            #print("IMAGE IDs Directory: "+ dataset_dir+"/"+subset+"/images/")
 
         # Add images
         for image_id in image_ids:
-            #print(image_id)
+            #print("IMAGE ID: "+str(image_id))
             filename_w_ext = os.path.basename(image_id)
             filename, file_extension = os.path.splitext(filename_w_ext)
             self.add_image(
@@ -223,7 +226,8 @@ class LunaDataset(utils.Dataset):
         
         mask = np.stack(mask, axis=-1)
         # Return mask, and array of class IDs of each instance. Since we have
-        # one class ID, we return an array of ones
+        # one class ID, we r
+        # Return an array of ones
         return mask, np.ones([mask.shape[-1]], dtype=np.int32)
 
     def image_reference(self, image_id):
