@@ -101,8 +101,8 @@ def get_filename(file_list, case):
 
 def processOriginaltraindata():
     expandslice = 13
-    trainImage = "/DATA/jakaria_data/resources/processed/images/"
-    trainMask = "/DATA/jakaria_data/resources/processed/masks/"
+    trainImage = "/DATA/jakaria_data/resources/2d_data/images/"
+    trainMask = "/DATA/jakaria_data/resources/2d_data/masks/"
     """
     load itk image,change z Spacing value to 1,and save image ,liver mask ,tumor mask
     :return:None
