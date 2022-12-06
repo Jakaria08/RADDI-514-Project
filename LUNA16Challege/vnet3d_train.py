@@ -16,8 +16,8 @@ def train():
     Preprocessing for dataset
     '''
     # Read  data set (Train data from CSV file)
-    csvmaskdata = pd.read_csv('/DATA/jakaria_data/LUNA16Challege/dataprocess/train_X.csv')
-    csvimagedata = pd.read_csv('/DATA/jakaria_data/LUNA16Challege/dataprocess/train_Y.csv')
+    csvimagedata = pd.read_csv('/DATA/jakaria_data/LUNA16Challege/dataprocess/train_X.csv')
+    csvmaskdata = pd.read_csv('/DATA/jakaria_data/LUNA16Challege/dataprocess/train_Y.csv')
     maskdata = csvmaskdata.iloc[:, :].values
     imagedata = csvimagedata.iloc[:, :].values
     # shuffle imagedata and maskdata together
