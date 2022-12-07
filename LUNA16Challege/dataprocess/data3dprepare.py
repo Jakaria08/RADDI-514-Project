@@ -116,10 +116,10 @@ def preparenoduledetectiontraindata():
     height = 512
     width = 512
     number = 601
-    srcpath = "/DATA/jakaria_data/resources/processed/images/"
+    srcpath = "/DATA/jakaria_data/resources/processed_n/images/"
     maskpath = "/DATA/jakaria_data/resources/processed/masks/"
-    trainImage = "/DATA/jakaria_data/resources/segmentation/train/images/"
-    trainMask = "/DATA/jakaria_data/resources/segmentation/train/masks/"
+    trainImage = "/DATA/jakaria_data/resources/segmentation_n/train/images/"
+    trainMask = "/DATA/jakaria_data/resources/segmentation_n/train/masks/"
     prepare3dtraindata(srcpath, maskpath, trainImage, trainMask, number, height, width, (16, 96, 96), 10, 10)
 
 
