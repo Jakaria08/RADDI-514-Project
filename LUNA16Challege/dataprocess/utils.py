@@ -53,4 +53,4 @@ def save_file2csv(file_dir, file_name):
         out.writelines(file_dir + "/" + sub_dirs[index] + "\n")
 
 
-save_file2csv("/DATA/jakaria_data/resources/segmentation_n/train/images", "train_X_n.csv")
+save_file2csv("/DATA/jakaria_data/resources/segmentation_n/train/masks", "train_Y_n.csv")
